@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use PDF;
 
 use Illuminate\Http\Request;
 use App\Models\Pasien;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-// extension_loaded('gmp') || dl('gmp.so');
 
 class PasienController extends Controller
 {
@@ -325,4 +325,11 @@ class PasienController extends Controller
     
         return redirect('data-pasien');
     }
+
+    // public function generatePDF()
+    // {
+    //     $pdf = PDF::loadView('pdf');
+
+    //     return $pdf->download('example.pdf');
+    // }
 }

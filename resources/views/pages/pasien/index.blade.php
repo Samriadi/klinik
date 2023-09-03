@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <a class="btn btn-success" href="tambah-pasien" role="button">Tambah</a>
+                            <a href="tambah-pasien" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -59,9 +59,15 @@
                                                 <td>{{ $item->jkel_pasien }}</td>
                                                 <td>{{ $item->nohp_pasien }}</td>
                                                 <td>
-                                                <a class="btn btn-warning btn-sm" href="/edit-pasien/{{ $item->id_pasien }}">Edit</a>
-                                                <a class="btn btn-danger btn-sm" href="/hapus-pasien/{{ $item->id_pasien }}">Hapus</a>
-                                                <a class="btn btn-primary btn-sm" href="/desc-pasien/{{ $item->id_pasien }}">Desc</a>
+                                                <div class="btn-group mb-3"
+                                                    role="group"
+                                                    aria-label="Basic example">
+                                                    <a href="/edit-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-secondary"><i class="far fa-edit"></i></a> 
+                                                    <a href="/hapus-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+                                                    <a href="/desc-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                </div>
+
+                                             
                                                 </td>
                                             </tr>
                                         </tbody>

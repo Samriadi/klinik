@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <a class="btn btn-success" href="tambah-perawat" role="button">Tambah</a>
+                            <a href="tambah-perawat" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -54,9 +54,21 @@
                                                  <td>{{ $item->nama_perawat }}</td>
                                                  <td>{{ $item->nip_perawat }}</td>
                                                  <td>{{ $item->nohp_perawat }}</td>
-                                                 <td>{{ $item->foto_perawat }}</td>
-                                                <td><a href="#"class="btn btn-warning">Edit</a>
-                                                <a href="#"class="btn btn-danger">Hapus</a>
+                                                 <td>
+                                                 <img src="{{ asset('storage/'.$item->foto_perawat) }}" width="100" alt="Perawat's Photo">
+
+
+                                                 </td>
+                                                <td>
+                                                    <!-- <a href="#"class="btn btn-warning">Edit</a>
+                                                <a href="#"class="btn btn-danger">Hapus</a> -->
+                                                <div class="btn-group mb-3"
+                                                    role="group"
+                                                    aria-label="Basic example">
+                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-danger"><i class="far fa-edit"></i></a> 
+                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-warning"><i class="fas fa-times"></i></a>
+                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                </div>
                                             </td>
                                             </tr>
                                         </tbody>
