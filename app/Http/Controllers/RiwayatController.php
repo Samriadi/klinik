@@ -87,7 +87,6 @@ class RiwayatController extends Controller
 
         //convert to array
         $arr_identitas_pasien = $identitas_pasien->toArray();
-        $arr_tanggal_berobat = $tanggal_berobat->toArray();
         $arr_gejala_pasien = $gejala_pasien->toArray();
         $arr_obat_pasien = $obat_pasien->toArray();
         $arr_perawat = $perawat->toArray();
@@ -95,19 +94,16 @@ class RiwayatController extends Controller
        
         //convert string array to numeric array
         $str_identitas_pasien = implode(" ", $arr_identitas_pasien);  $int_identitas_pasien = explode(" ", $str_identitas_pasien);
-        // $str_kode_pasien = implode(" ", $arr_kode_pasien);  $int_kode_pasien = explode(" ", $str_kode_pasien);
         $str_gejala_pasien = implode(" ", $arr_gejala_pasien);  $int_gejala_pasien = explode(" ", $str_gejala_pasien);
         $str_obat_pasien = implode(" ", $arr_obat_pasien);  $int_obat_pasien = explode(" ", $str_obat_pasien);
-        $str_perawat = implode(" ", $arr_perawat);  $int_perawat = explode(" ", $str_perawat);
-        $str_dokter = implode(" ", $arr_dokter);  $int_dokter = explode(" ", $str_dokter);
+        $str_perawat = implode(" ", $arr_perawat);  
+        $str_dokter = implode(" ", $arr_dokter);  
      
         //convert integer to array
         $int_arr_identitas_pasien = array_map('intval', $int_identitas_pasien);
-        // $int_arr_kode_pasien = array_map('intval', $int_kode_pasien);
         $int_arr_gejala_pasien = array_map('intval', $int_gejala_pasien);
         $int_arr_obat_pasien = array_map('intval', $int_obat_pasien);
-        $int_arr_perawat = array_map('intval', $int_perawat);
-        $int_arr_dokter = array_map('intval', $int_dokter);
+  
        
         //handle pow
         $pow_identitas_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
@@ -118,10 +114,6 @@ class RiwayatController extends Controller
         }, $int_arr_gejala_pasien);
         $pow_obat_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_obat_pasien);
-        $pow_perawat  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
-        }, $int_arr_perawat);
-        $pow_dokter  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
-        }, $int_arr_dokter);
 
         //handle mod
         $modulo_identitas_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
@@ -132,34 +124,23 @@ class RiwayatController extends Controller
         }, $pow_gejala_pasien);
         $modulo_obat_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
         }, $pow_obat_pasien);
-        $modulo_perawat  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
-        }, $pow_perawat);
-        $modulo_dokter  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
-        }, $pow_dokter);
 
         //convert to ascii
         $ascii_identitas_pasien = array_map('chr', $modulo_identitas_pasien);
-        // $ascii_kode_pasien = array_map('chr', $modulo_kode_pasien);
         $ascii_gejala_pasien = array_map('chr', $modulo_gejala_pasien);
         $ascii_obat_pasien = array_map('chr', $modulo_obat_pasien);
-        $ascii_perawat = array_map('chr', $modulo_perawat);
-        $ascii_dokter = array_map('chr', $modulo_dokter);
 
         //descipt
         $desc_identitas_pasien= implode($ascii_identitas_pasien);
-        // $desc_kode_pasien = implode($ascii_kode_pasien);
         $desc_gejala_pasien = implode($ascii_gejala_pasien);
         $desc_obat_pasien = implode($ascii_obat_pasien);
-        $desc_perawat = implode($ascii_perawat);
-        $desc_dokter = implode($ascii_dokter);
 
         return view('pages.riwayat.desc', [
             'identitas_pasien' => $desc_identitas_pasien,
-            'tanggal_berobat' => $tanggal_berobat,
             'gejala_pasien' => $desc_gejala_pasien,
             'obat_pasien' => $desc_obat_pasien,
-            'perawat' => $desc_perawat,
-            'dokter' => $desc_dokter,
+            'perawat' => $str_perawat,
+            'dokter' => $str_dokter,
         ], [ 'type_menu' => '']);
 
     }
