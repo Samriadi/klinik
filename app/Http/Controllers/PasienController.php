@@ -28,8 +28,8 @@ class PasienController extends Controller
         $jkel_pasien = $record->pluck('jkel_pasien');
         $nohp_pasien = $record->pluck('nohp_pasien');
 
-        $powerPow = 103;
-        $powerMod = 403;
+        $powerPow = 187;
+        $powerMod = 319;
 
         //convert to array
         $arr_nama_pasien = $nama_pasien->toArray();
@@ -82,6 +82,8 @@ class PasienController extends Controller
         }, $pow_jkel_pasien);
         $modulo_nohp_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
         }, $pow_nohp_pasien);
+        
+        Log::info(json_encode($modulo_nama_pasien));
 
         //convert to ascii
         $ascii_nama_pasien = array_map('chr', $modulo_nama_pasien);
@@ -141,12 +143,12 @@ class PasienController extends Controller
         $ascii_jkel_pasien = $this->stringToAscii($jkel_pasien);
         $ascii_nohp_pasien = $this->stringToAscii($nohp_pasien);
 
-        $modulo_nama_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_nama_pasien);
-        $modulo_kode_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_kode_pasien);
-        $modulo_kategori_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_kategori_pasien);
-        $modulo_umur_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_umur_pasien);
-        $modulo_jkel_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_jkel_pasien);
-        $modulo_nohp_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_nohp_pasien);
+        $modulo_nama_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_nama_pasien);
+        $modulo_kode_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_kode_pasien);
+        $modulo_kategori_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_kategori_pasien);
+        $modulo_umur_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_umur_pasien);
+        $modulo_jkel_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_jkel_pasien);
+        $modulo_nohp_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_nohp_pasien);
 
         $str_nama_pasien = implode(" ", $modulo_nama_pasien);
         $str_kode_pasien = implode(" ", $modulo_kode_pasien);
@@ -354,6 +356,7 @@ class PasienController extends Controller
 
 
         $modulo_nama_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_nama_pasien, array_keys($ascii_nama_pasien));
+
         $modulo_kategori_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_kategori_pasien, array_keys($ascii_kategori_pasien));
         $modulo_umur_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_umur_pasien, array_keys($ascii_umur_pasien));
         $modulo_jkel_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_jkel_pasien, array_keys($ascii_jkel_pasien));
@@ -392,6 +395,8 @@ class PasienController extends Controller
             'created_at' => $timestamp,
         ]);
         // alihkan halaman ke halaman 
+        Log::info(json_encode($modulo_nama_pasien));
+
         return redirect('data-pasien');
     }
     public function EnkripsiElgamal($a){
@@ -411,9 +416,8 @@ class PasienController extends Controller
             //menghitung nilai delta
             $yk = bcpow($y, $k);
             $ykm = strval($yk*$m);
-            // dd($ykm);
             $delta = bcmod($ykm, $p);
-
+            Log::info(" New Random K : ".$k);
             return [$gamma, $delta];
     }
 
@@ -486,6 +490,7 @@ class PasienController extends Controller
 
         
         $modulo_nama_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_nama_pasien, array_keys($twoDimArray_nama_pasien));
+        
 
         $modulo_kategori_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_kategori_pasien, array_keys($twoDimArray_kategori_pasien));
 
@@ -494,7 +499,9 @@ class PasienController extends Controller
         $modulo_jkel_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_jkel_pasien, array_keys($twoDimArray_jkel_pasien));
 
         $modulo_nohp_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_nohp_pasien, array_keys($twoDimArray_nohp_pasien));
-
+        
+        Log::info(json_encode($modulo_nama_pasien));
+        
         //convert to ascii
         $ascii_nama_pasien = array_map('chr', $modulo_nama_pasien);
         $ascii_kategori_pasien = array_map('chr', $modulo_kategori_pasien);
