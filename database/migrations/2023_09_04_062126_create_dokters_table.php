@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('nip_dokter');
             $table->integer('nohp_dokter');
             $table->string('foto_dokter');
+            $table->timestamps();
+
         });
     }
 

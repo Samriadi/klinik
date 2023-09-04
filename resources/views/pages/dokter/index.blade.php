@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <a href="#" class="btn btn-primary">Tambah</a>
+                            <a href="tambah-dokter" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -40,9 +40,6 @@
                                         id="table-1">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">
-                                                    #
-                                                </th>
                                                 <th>Nama Dokter</th>
                                                 <th>NIP</th>
                                                 <th>Nomor Hp</th>
@@ -51,26 +48,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach ($dokter as $item)
                                             <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>Ananda</td>
-                                                <td>677575658789787</td>
-                                                <td>0811111111</td>
-                                                <td>
-                                                    <img alt="image"
-                                                        src="{{ asset('img/avatar/1.jpg') }}"
-                                                        class="rounded-circle"
-                                                        width="80"
-                                                        height="75"
-                                                        data-toggle="tooltip"
-                                                        title="Wildan Ahdian">
-                                                </td>
-                                                <td><a href="#"class="btn btn-warning">Edit</a>
-                                                <a href="#"class="btn btn-danger">Hapus</a>
+                                            <td>{{ $item->nama_dokter }}</td>
+                                            <td>{{ $item->nip_dokter }}</td>
+                                            <td>{{ $item->nohp_dokter }}</td>
+                                            <td>
+                                                 <img src="{{ asset('storage/'.$item->foto_dokter) }}" width="100" alt="Perawat's Photo">
+                                                 </td>
+                                                 <td>
+                                                <div class="btn-group mb-3"
+                                                    role="group"
+                                                    aria-label="Basic example">
+                                                    <a href="/edit-dokter/{{ $item->id_dokter }}" role="button" class="btn btn-icon btn-info"><i class="fas fa-pencil-alt"></i></a> 
+                                                    <a href="/hapus-dokter/{{ $item->id_dokter }}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                </div>
                                             </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

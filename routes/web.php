@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PerawatControlller;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\DokterController;
 use App\Models\Riwayat;
 
 /*
@@ -55,6 +56,13 @@ Route::get('/desc-riwayat/{id}',  [RiwayatController::class, 'desc'])->name('riw
 Route::get('/edit-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
 Route::get('/hapus-riwayat/{id}',  [RiwayatController::class, 'hapus'])->name('riwayat.hapus');
 
+//dokter
+Route::get('/data-dokter', [DokterController::class, 'index'])->name('dokter.index');
+Route::get('/tambah-dokter', [DokterController::class, 'tambah'])->name('dokter.tambah');
+Route::post('/store-dokter',  [DokterController::class, 'store'])->name('dokter.store');
+Route::get('/edit-dokter/{id}',  [DokterController::class, 'edit'])->name('dokter.edit');
+Route::post('/update-dokter',  [DokterController::class, 'update'])->name('dokter.update');
+Route::get('/hapus-dokter/{id}',  [DokterController::class, 'hapus'])->name('dokter.hapus');
 
 
 
