@@ -121,6 +121,9 @@ class PasienController extends Controller
     public function tambah(){
         return view('pages.pasien.tambah', [ 'type_menu' => '']);
     }
+    public function add(){
+        return view('pages.pasien.add', [ 'type_menu' => '']);
+    }
 
     public function store(Request $request)
     {
@@ -332,4 +335,122 @@ class PasienController extends Controller
 
     //     return $pdf->download('example.pdf');
     // }
+
+    public function save(Request $request)
+    {
+        $nama_pasien = $request->input('nama_pasien');
+        $kode_pasien = $request->input('kode_pasien');
+        $kategori_pasien = $request->input('kategori_pasien');
+        $umur_pasien = $request->input('umur_pasien');
+        $jkel_pasien = $request->input('jkel_pasien');
+        $nohp_pasien = $request->input('nohp_pasien');
+        
+        $ascii_nama_pasien = $this->stringToAscii($nama_pasien);
+        $ascii_kategori_pasien = $this->stringToAscii($kategori_pasien);
+        $ascii_umur_pasien = $this->stringToAscii($umur_pasien);
+        $ascii_jkel_pasien = $this->stringToAscii($jkel_pasien);
+        $ascii_nohp_pasien = $this->stringToAscii($nohp_pasien);
+
+
+        $modulo_nama_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_nama_pasien, array_keys($ascii_nama_pasien));
+        $modulo_kategori_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_kategori_pasien, array_keys($ascii_kategori_pasien));
+        $modulo_umur_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_umur_pasien, array_keys($ascii_umur_pasien));
+        $modulo_jkel_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_jkel_pasien, array_keys($ascii_jkel_pasien));
+        $modulo_nohp_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_nohp_pasien, array_keys($ascii_nohp_pasien));
+
+        $enkrip_nama_pasien = array();
+        foreach ($modulo_nama_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_nama_pasien[] = $element;}}
+        $enkrip_kategori_pasien = array();
+        foreach ($modulo_kategori_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_kategori_pasien[] = $element;}}
+        $enkrip_umur_pasien = array();
+        foreach ($modulo_umur_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_umur_pasien[] = $element;}}
+        $enkrip_jkel_pasien = array();
+        foreach ($modulo_jkel_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_jkel_pasien[] = $element;}}
+        $enkrip_nohp_pasien = array();
+        foreach ($modulo_nohp_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_nohp_pasien[] = $element;}}
+
+        // $twoDimArray = array();
+        // $row = array(); // Subarray untuk setiap baris
+        // foreach ($arraySatuDimensi as $element) {
+        //     $row[] = $element;
+        //     if (count($row) == 2) { // Setiap dua elemen, tambahkan ke array dua dimensi
+        //         $twoDimArray[] = $row;
+        //         $row = array(); // Reset subarray
+        //     }
+        // }
+        // dd($arraySatuDimensi, $twoDimArray);
+
+
+        $str_nama_pasien = implode(",", $enkrip_nama_pasien);
+        $str_kategori_pasien = implode(" ", $enkrip_kategori_pasien);
+        $str_umur_pasien = implode(" ", $enkrip_umur_pasien);
+        $str_jkel_pasien = implode(" ", $enkrip_jkel_pasien);
+        $str_nohp_pasien = implode(" ", $enkrip_nohp_pasien);
+        $timestamp = Carbon::now();
+
+        // insert data ke table 
+        Pasien::insert([
+            'nama_pasien' => $str_nama_pasien,
+            'kode_pasien' => $kode_pasien,
+            'kategori_pasien' => $str_kategori_pasien,
+            'umur_pasien' => $str_umur_pasien,
+            'jkel_pasien' => $str_jkel_pasien,
+            'nohp_pasien' => $str_nohp_pasien,
+            'created_at' => $timestamp,
+        ]);
+        // alihkan halaman ke halaman 
+        return redirect('data-pasien');
+    }
+
+    public function saveElgamal($item){
+        $pow=7;
+        $mod=403;
+
+        if($item%2==0)
+        {
+        return $item**$pow%$mod;
+        }
+        else
+        {
+        return $item+2;
+        }
+    }
+    public function getArrayItem($arr){
+ 
+        if($arr%2==0)
+        {
+        return 0;
+        }
+        else
+        {
+        return 1;
+        }
+    }
+    public function EnkripsiElgamal($a){
+ 
+            $p=257;
+            $g=2;
+            $x=255;
+            $y=129;
+
+            $m=$a;
+            $k=rand(1, 7);
+
+            //menhitung nilai gamma
+            $gk= bcpow($g, $k);
+            $gamma = bcmod($gk, $p);
+
+            //menghitung nilai delta
+            $yk = bcpow($y, $k);
+            $ykm = strval($yk*$m);
+            // dd($ykm);
+            $delta = bcmod($ykm, $p);
+
+            return [$gamma, $delta];
+    }
+
+    public function DekripsiElgamal($twoDimArray){
+ 
+      
+}
 }

@@ -32,7 +32,16 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+
+                            <div class="btn-group mb-3"
+                            role="group"
+                            aria-label="Basic example">
+                            <a href="tambah-pasien" role="button" class="btn btn-icon btn-info"><i class="far fa-add"></i>RSA</a>
+                            <a href="add-pasien" role="button" class="btn btn-icon btn-danger"><i class="far fa-add"></i>ELGAMAL</a>
+                            </div>
+<!-- 
                             <a href="tambah-pasien" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
+                            <a href="tambah-pasien" role="button" class="btn btn-icon btn-success"><i class="far fa-add"></i></a> -->
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">

@@ -35,6 +35,9 @@ Route::get('/credits', function () {
 Route::get('/data-pasien', [PasienController::class, 'index'])->name('pasien.index');
 Route::get('/tambah-pasien', [PasienController::class, 'tambah'])->name('pasien.tambah');
 Route::post('/store-pasien',  [PasienController::class, 'store'])->name('pasien.store');
+Route::get('/add-pasien', [PasienController::class, 'add'])->name('pasien.add');
+Route::post('/save-pasien',  [PasienController::class, 'save'])->name('pasien.save');
+
 Route::get('/edit-pasien/{id}',  [PasienController::class, 'edit'])->name('pasien.edit');
 Route::get('/desc-pasien/{id}',  [PasienController::class, 'desc'])->name('pasien.desc');
 Route::post('/update-pasien',  [PasienController::class, 'update'])->name('pasien.update');
