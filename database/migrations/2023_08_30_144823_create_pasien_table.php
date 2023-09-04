@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('kategori_pasien');
             $table->string('umur_pasien');
             $table->string('jkel_pasien');
-            $table->integer('nohp_pasien');
+            $table->string('nohp_pasien');
             $table->timestamps();
         });
     }
