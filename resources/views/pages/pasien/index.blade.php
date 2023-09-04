@@ -36,7 +36,7 @@
                             <div class="btn-group mb-3"
                             role="group"
                             aria-label="Basic example">
-                            <a href="tambah-pasien" role="button" class="btn btn-icon btn-info"><i class="far fa-add"></i>RSA</a>
+                            <a href="tambah-pasien" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i>RSA</a>
                             <a href="add-pasien" role="button" class="btn btn-icon btn-danger"><i class="far fa-add"></i>ELGAMAL</a>
                             </div>
 <!-- 
@@ -72,8 +72,12 @@
                                                     role="group"
                                                     aria-label="Basic example">
                                                     <a href="/edit-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
-                                                    <a href="/hapus-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
-                                                    <a href="/desc-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                    <a href="/hapus-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-dark"><i class="fas fa-trash"></i></a>
+                                                    @if ($item->role===0)
+                                                    <a href="/desc-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a>
+                                                    @else
+                                                    <a href="/deks-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a
+                                                    @endif
                                                 </div>
 
                                              

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('umur_pasien');
             $table->string('jkel_pasien');
             $table->string('nohp_pasien');
+            $table->integer('role');
             $table->timestamps();
         });
     }
