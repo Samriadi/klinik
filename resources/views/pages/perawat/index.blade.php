@@ -60,14 +60,11 @@
 
                                                  </td>
                                                 <td>
-                                                    <!-- <a href="#"class="btn btn-warning">Edit</a>
-                                                <a href="#"class="btn btn-danger">Hapus</a> -->
                                                 <div class="btn-group mb-3"
                                                     role="group"
                                                     aria-label="Basic example">
-                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-danger"><i class="far fa-edit"></i></a> 
-                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-warning"><i class="fas fa-times"></i></a>
-                                                    <a href="tambah-perawat" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                    <a href="/edit-perawat/{{ $item->id_perawat }}" role="button" class="btn btn-icon btn-info"><i class="fas fa-pencil-alt"></i></a> 
+                                                    <a href="/hapus-perawat/{{ $item->id_perawat }}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
                                             </tr>

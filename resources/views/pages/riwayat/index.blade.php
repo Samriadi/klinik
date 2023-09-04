@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <a class="btn btn-success" href="tambah-riwayat" role="button">Tambah</a>
+                            <a href="tambah-riwayat" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -60,9 +60,16 @@
                                                 <td>{{ $item->perawat }}</td>
                                                 <td>{{ $item->dokter }}</td>
                                                 <td>
-                                                <a class="btn btn-warning btn-sm" href="/edit-riwayat/{{ $item->id_riwayat }}">Edit</a>
+                                                <!-- <a class="btn btn-warning btn-sm" href="/edit-riwayat/{{ $item->id_riwayat }}">Edit</a>
                                                 <a class="btn btn-danger btn-sm" href="/hapus-riwayat/{{ $item->id_riwayat }}">Hapus</a>
-                                                <a class="btn btn-primary btn-sm" href="/desc-riwayat/{{ $item->id_riwayat }}">Desc</a>
+                                                <a class="btn btn-primary btn-sm" href="/desc-riwayat/{{ $item->id_riwayat }}">Desc</a> -->
+                                                <div class="btn-group mb-3"
+                                                    role="group"
+                                                    aria-label="Basic example">
+                                                    <a href="/edit-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    <a href="/hapus-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+                                                    <a href="/desc-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                </div>
                                             </td>
                                             </tr>
                                         @endforeach

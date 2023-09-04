@@ -17,14 +17,12 @@ use App\Models\Riwayat;
 |
 */
 
-Route::redirect('/', '/pages.dokter.data-dokter');
+Route::redirect('/', '/dashboard');
 
 // Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('welcome', ['type_menu' => 'dashboard']);
-});
-Route::get('/dashboard-ecommerce-dashboard', function () {
-    return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
 });
 
 // credits
@@ -45,6 +43,9 @@ Route::get('/hapus-pasien/{id}',  [PasienController::class, 'hapus'])->name('pas
 Route::get('/data-perawat', [PerawatControlller::class, 'index'])->name('perawat.index');
 Route::get('/tambah-perawat', [PerawatControlller::class, 'tambah'])->name('perawat.tambah');
 Route::post('/store-perawat',  [PerawatControlller::class, 'store'])->name('perawat.store');
+Route::get('/edit-perawat/{id}',  [PerawatControlller::class, 'edit'])->name('perawat.edit');
+Route::post('/update-perawat',  [PerawatControlller::class, 'update'])->name('perawat.update');
+Route::get('/hapus-perawat/{id}',  [PerawatControlller::class, 'hapus'])->name('perawat.hapus');
 
 //riwayat
 Route::get('/data-riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
