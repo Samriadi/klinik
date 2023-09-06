@@ -39,9 +39,11 @@ Route::get('/add-pasien', [PasienController::class, 'add'])->name('pasien.add');
 Route::post('/save-pasien',  [PasienController::class, 'save'])->name('pasien.save');
 
 Route::get('/edit-pasien/{id}',  [PasienController::class, 'edit'])->name('pasien.edit');
+Route::get('/ubah-pasien/{id}',  [PasienController::class, 'ubah'])->name('pasien.ubah');
 Route::get('/desc-pasien/{id}',  [PasienController::class, 'desc'])->name('pasien.desc');
 Route::get('/deks-pasien/{id}',  [PasienController::class, 'deks'])->name('pasien.deks');
 Route::post('/update-pasien',  [PasienController::class, 'update'])->name('pasien.update');
+Route::post('/put-pasien',  [PasienController::class, 'put'])->name('pasien.put');
 Route::get('/hapus-pasien/{id}',  [PasienController::class, 'hapus'])->name('pasien.hapus');
 
 //perawat

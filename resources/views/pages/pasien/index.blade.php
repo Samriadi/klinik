@@ -49,6 +49,7 @@
                                         id="table-1">
                                         <thead>
                                             <tr>
+                                                <th>Enkripsi</th>
                                                 <th>Kode Pasien</th>
                                                 <th>Nama Pasien</th>
                                                 <th>Kategori</th>
@@ -61,6 +62,11 @@
                                         <tbody>
                                         @foreach ($nama_pasien as $item)
                                             <tr>
+                                                @if ($item->role===0)
+                                                <td>RSA</td>
+                                                @else
+                                                <td>ElGamal</td>
+                                                @endif
                                                 <td>{{ $item->kode_pasien }}</td>
                                                 <td>{{ $item->nama_pasien }}</td>
                                                 <td>{{ $item->kategori_pasien }}</td>
@@ -71,12 +77,18 @@
                                                 <div class="btn-group mb-3"
                                                     role="group"
                                                     aria-label="Basic example">
+                                                    @if ($item->role===0)
                                                     <a href="/edit-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    @else
+                                                    <a href="/ubah-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    @endif
+                                                    
                                                     <a href="/hapus-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-dark"><i class="fas fa-trash"></i></a>
+
                                                     @if ($item->role===0)
                                                     <a href="/desc-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a>
                                                     @else
-                                                    <a href="/deks-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a
+                                                    <a href="/deks-pasien/{{ $item->id_pasien }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a>
                                                     @endif
                                                 </div>
 

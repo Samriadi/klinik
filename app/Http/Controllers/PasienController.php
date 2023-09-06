@@ -19,6 +19,9 @@ class PasienController extends Controller
 
     public function desc($id)
     {
+        $powerPow = 187;
+        $powerMod = 319;
+
         //get data from database
         $record = Pasien::where('id_pasien', $id)->get();
         $nama_pasien = $record->pluck('nama_pasien');
@@ -27,9 +30,6 @@ class PasienController extends Controller
         $umur_pasien = $record->pluck('umur_pasien');
         $jkel_pasien = $record->pluck('jkel_pasien');
         $nohp_pasien = $record->pluck('nohp_pasien');
-
-        $powerPow = 187;
-        $powerMod = 319;
 
         //convert to array
         $arr_nama_pasien = $nama_pasien->toArray();
@@ -40,13 +40,20 @@ class PasienController extends Controller
         $arr_nohp_pasien = $nohp_pasien->toArray();
        
         //convert string array to numeric array
-        $str_nama_pasien = implode(" ", $arr_nama_pasien);  $int_nama_pasien = explode(" ", $str_nama_pasien);
-        $str_kode_pasien = implode(" ", $arr_kode_pasien);  $int_kode_pasien = explode(" ", $str_kode_pasien);
-        $str_kategori_pasien = implode(" ", $arr_kategori_pasien);  $int_kategori_pasien = explode(" ", $str_kategori_pasien);
-        $str_umur_pasien = implode(" ", $arr_umur_pasien);  $int_umur_pasien = explode(" ", $str_umur_pasien);
-        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  $int_jkel_pasien = explode(" ", $str_jkel_pasien);
-        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  $int_nohp_pasien = explode(" ", $str_nohp_pasien);
-     
+        $str_nama_pasien = implode(" ", $arr_nama_pasien);  
+        $str_kode_pasien = implode(" ", $arr_kode_pasien);  
+        $str_kategori_pasien = implode(" ", $arr_kategori_pasien);  
+        $str_umur_pasien = implode(" ", $arr_umur_pasien); 
+        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  
+        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  
+        
+        $int_nama_pasien = explode(" ", $str_nama_pasien);
+        $int_kode_pasien = explode(" ", $str_kode_pasien);
+        $int_kategori_pasien = explode(" ", $str_kategori_pasien);
+        $int_umur_pasien = explode(" ", $str_umur_pasien);
+        $int_jkel_pasien = explode(" ", $str_jkel_pasien);
+        $int_nohp_pasien = explode(" ", $str_nohp_pasien);
+
         //convert integer to array
         $int_arr_nama_pasien = array_map('intval', $int_nama_pasien);
         $int_arr_kode_pasien = array_map('intval', $int_kode_pasien);
@@ -56,34 +63,54 @@ class PasienController extends Controller
         $int_arr_nohp_pasien = array_map('intval', $int_nohp_pasien);
        
         //handle pow
-        $pow_nama_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+        $pow_nama_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_nama_pasien);
-        $pow_kode_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_kode_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_kode_pasien);
-        $pow_kategori_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+        
+        $pow_kategori_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_kategori_pasien);
-        $pow_umur_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_umur_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_umur_pasien);
-        $pow_jkel_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_jkel_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_jkel_pasien);
-        $pow_nohp_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+        
+        $pow_nohp_pasien  = array_map(function($num) use ($powerPow) {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_nohp_pasien);
 
         //handle mod
-        $modulo_nama_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+        $modulo_nama_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_nama_pasien);
-        $modulo_kode_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+
+        $modulo_kode_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_kode_pasien);
-        $modulo_kategori_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+
+        $modulo_kategori_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_kategori_pasien);
-        $modulo_umur_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+
+        $modulo_umur_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_umur_pasien);
-        $modulo_jkel_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+
+        $modulo_jkel_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_jkel_pasien);
-        $modulo_nohp_pasien  = array_map(function($num) use ($powerMod) {return $this->customPowerMod($num, $powerMod);
+
+        $modulo_nohp_pasien  = array_map(function($num) use ($powerMod) {
+            return $this->customPowerMod($num, $powerMod);
         }, $pow_nohp_pasien);
-        
-        Log::info(json_encode($modulo_nama_pasien));
 
         //convert to ascii
         $ascii_nama_pasien = array_map('chr', $modulo_nama_pasien);
@@ -143,7 +170,10 @@ class PasienController extends Controller
         $ascii_jkel_pasien = $this->stringToAscii($jkel_pasien);
         $ascii_nohp_pasien = $this->stringToAscii($nohp_pasien);
 
-        $modulo_nama_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_nama_pasien);
+        $modulo_nama_pasien = array_map(function ($item) { 
+            return $item**3%319; 
+        }, $ascii_nama_pasien);
+
         $modulo_kode_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_kode_pasien);
         $modulo_kategori_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_kategori_pasien);
         $modulo_umur_pasien = array_map(function ($item) { return $item**3%319; }, $ascii_umur_pasien);
@@ -195,8 +225,8 @@ class PasienController extends Controller
         $jkel_pasien = $pasien->pluck('jkel_pasien');
         $nohp_pasien = $pasien->pluck('nohp_pasien');
 
-        $powerPow = 103;
-        $powerMod = 403;
+        $powerPow = 187;
+        $powerMod = 319;
 
         //convert to array
         $arr_nama_pasien = $nama_pasien->toArray();
@@ -207,13 +237,20 @@ class PasienController extends Controller
         $arr_nohp_pasien = $nohp_pasien->toArray();
        
         //convert string array to numeric array
-        $str_nama_pasien = implode(" ", $arr_nama_pasien);  $int_nama_pasien = explode(" ", $str_nama_pasien);
-        $str_kode_pasien = implode(" ", $arr_kode_pasien);  $int_kode_pasien = explode(" ", $str_kode_pasien);
-        $str_kategori_pasien = implode(" ", $arr_kategori_pasien);  $int_kategori_pasien = explode(" ", $str_kategori_pasien);
-        $str_umur_pasien = implode(" ", $arr_umur_pasien);  $int_umur_pasien = explode(" ", $str_umur_pasien);
-        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  $int_jkel_pasien = explode(" ", $str_jkel_pasien);
-        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  $int_nohp_pasien = explode(" ", $str_nohp_pasien);
+        $str_nama_pasien = implode(" ", $arr_nama_pasien);  
+        $str_kode_pasien = implode(" ", $arr_kode_pasien);  
+        $str_kategori_pasien = implode(" ", $arr_kategori_pasien);  
+        $str_umur_pasien = implode(" ", $arr_umur_pasien);  
+        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  
+        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  
      
+        $int_nama_pasien = explode(" ", $str_nama_pasien);
+        $int_kode_pasien = explode(" ", $str_kode_pasien);
+        $int_kategori_pasien = explode(" ", $str_kategori_pasien);
+        $int_umur_pasien = explode(" ", $str_umur_pasien);
+        $int_jkel_pasien = explode(" ", $str_jkel_pasien);
+        $int_nohp_pasien = explode(" ", $str_nohp_pasien);
+
         //convert integer to array
         $int_arr_nama_pasien = array_map('intval', $int_nama_pasien);
         $int_arr_kode_pasien = array_map('intval', $int_kode_pasien);
@@ -223,17 +260,34 @@ class PasienController extends Controller
         $int_arr_nohp_pasien = array_map('intval', $int_nohp_pasien);
        
         //handle pow
-        $pow_nama_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+        $pow_nama_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_nama_pasien);
-        $pow_kode_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_kode_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_kode_pasien);
-        $pow_kategori_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_kategori_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_kategori_pasien);
-        $pow_umur_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_umur_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_umur_pasien);
-        $pow_jkel_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_jkel_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_jkel_pasien);
-        $pow_nohp_pasien  = array_map(function($num) use ($powerPow) {return $this->customPowerPow($num, $powerPow); 
+
+        $pow_nohp_pasien  = array_map(function($num) use ($powerPow) 
+        {
+            return $this->customPowerPow($num, $powerPow); 
         }, $int_arr_nohp_pasien);
 
         //handle mod
@@ -355,26 +409,42 @@ class PasienController extends Controller
         $ascii_nohp_pasien = $this->stringToAscii($nohp_pasien);
 
 
-        $modulo_nama_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_nama_pasien, array_keys($ascii_nama_pasien));
+        $modulo_nama_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_nama_pasien, array_keys($ascii_nama_pasien));
 
-        $modulo_kategori_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_kategori_pasien, array_keys($ascii_kategori_pasien));
-        $modulo_umur_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_umur_pasien, array_keys($ascii_umur_pasien));
-        $modulo_jkel_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_jkel_pasien, array_keys($ascii_jkel_pasien));
-        $modulo_nohp_pasien = array_map(function ($value, $index) {return $this->EnkripsiElgamal($value, $index); }, $ascii_nohp_pasien, array_keys($ascii_nohp_pasien));
+        $modulo_kategori_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_kategori_pasien, array_keys($ascii_kategori_pasien));
+        
+        $modulo_umur_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_umur_pasien, array_keys($ascii_umur_pasien));
+        
+        $modulo_jkel_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_jkel_pasien, array_keys($ascii_jkel_pasien));
+        
+        $modulo_nohp_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_nohp_pasien, array_keys($ascii_nohp_pasien));
 
         $enkrip_nama_pasien = array();
-        foreach ($modulo_nama_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_nama_pasien[] = $element;}}
         $enkrip_kategori_pasien = array();
-        foreach ($modulo_kategori_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_kategori_pasien[] = $element;}}
         $enkrip_umur_pasien = array();
-        foreach ($modulo_umur_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_umur_pasien[] = $element;}}
         $enkrip_jkel_pasien = array();
-        foreach ($modulo_jkel_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_jkel_pasien[] = $element;}}
         $enkrip_nohp_pasien = array();
-        foreach ($modulo_nohp_pasien as $subArray) { foreach ($subArray as $element) { $enkrip_nohp_pasien[] = $element;}}
 
-      
-
+        foreach ($modulo_nama_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_nama_pasien[] = $element;}}
+        foreach ($modulo_kategori_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_kategori_pasien[] = $element;}}
+        foreach ($modulo_umur_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_umur_pasien[] = $element;}}
+        foreach ($modulo_jkel_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_jkel_pasien[] = $element;}}
+        foreach ($modulo_nohp_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_nohp_pasien[] = $element;}}
 
         $str_nama_pasien = implode(" ", $enkrip_nama_pasien);
         $str_kategori_pasien = implode(" ", $enkrip_kategori_pasien);
@@ -395,12 +465,12 @@ class PasienController extends Controller
             'created_at' => $timestamp,
         ]);
         // alihkan halaman ke halaman 
+
         Log::info(json_encode($modulo_nama_pasien));
 
         return redirect('data-pasien');
     }
     public function EnkripsiElgamal($a){
- 
             $p=257;
             $g=2;
             $x=255;
@@ -447,13 +517,18 @@ class PasienController extends Controller
         $arr_nohp_pasien = $nohp_pasien->toArray();
        
         //convert string array to numeric array
-        $str_nama_pasien = implode(" ", $arr_nama_pasien);  $int_nama_pasien = explode(" ", $str_nama_pasien);
+        $str_nama_pasien = implode(" ", $arr_nama_pasien);  
         $str_kode_pasien = implode(" ", $arr_kode_pasien); 
-        $str_kategori_pasien = implode(" ", $arr_kategori_pasien);  $int_kategori_pasien = explode(" ", $str_kategori_pasien);
-        $str_umur_pasien = implode(" ", $arr_umur_pasien);  $int_umur_pasien = explode(" ", $str_umur_pasien);
-        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  $int_jkel_pasien = explode(" ", $str_jkel_pasien);
-        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  $int_nohp_pasien = explode(" ", $str_nohp_pasien);
+        $str_kategori_pasien = implode(" ", $arr_kategori_pasien); 
+        $str_umur_pasien = implode(" ", $arr_umur_pasien);  
+        $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  
+        $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  
      
+        $int_nama_pasien = explode(" ", $str_nama_pasien);
+        $int_kategori_pasien = explode(" ", $str_kategori_pasien);
+        $int_umur_pasien = explode(" ", $str_umur_pasien);
+        $int_jkel_pasien = explode(" ", $str_jkel_pasien);
+        $int_nohp_pasien = explode(" ", $str_nohp_pasien);
 
         //convert integer to array
         $int_arr_nama_pasien = array_map('intval', $int_nama_pasien);
@@ -463,42 +538,91 @@ class PasienController extends Controller
         $int_arr_nohp_pasien = array_map('intval', $int_nohp_pasien);
 
         $twoDimArray_nama_pasien = array();
-        $row_nama_pasien = array(); 
-        foreach ($int_arr_nama_pasien as $element) { $row_nama_pasien[] = $element;
-            if (count($row_nama_pasien) == 2) { $twoDimArray_nama_pasien[] = $row_nama_pasien; $row_nama_pasien = array(); }}
-        
         $twoDimArray_kategori_pasien = array();
-        $row_kategori_pasien = array(); 
-        foreach ($int_arr_kategori_pasien as $element) { $row_kategori_pasien[] = $element;
-            if (count($row_kategori_pasien) == 2) { $twoDimArray_kategori_pasien[] = $row_kategori_pasien; $row_kategori_pasien = array(); }}
-
         $twoDimArray_umur_pasien = array();
-        $row_umur_pasien = array(); 
-        foreach ($int_arr_umur_pasien as $element) { $row_umur_pasien[] = $element;
-            if (count($row_umur_pasien) == 2) { $twoDimArray_umur_pasien[] = $row_umur_pasien; $row_umur_pasien = array(); }}
-
         $twoDimArray_jkel_pasien = array();
-        $row_jkel_pasien = array(); 
-        foreach ($int_arr_jkel_pasien as $element) { $row_jkel_pasien[] = $element;
-            if (count($row_jkel_pasien) == 2) { $twoDimArray_jkel_pasien[] = $row_jkel_pasien; $row_jkel_pasien = array(); }}
-
         $twoDimArray_nohp_pasien = array();
+
+        $row_nama_pasien = array(); 
+        $row_kategori_pasien = array(); 
+        $row_umur_pasien = array(); 
+        $row_jkel_pasien = array(); 
         $row_nohp_pasien = array(); 
-        foreach ($int_arr_nohp_pasien as $element) { $row_nohp_pasien[] = $element;
-            if (count($row_nohp_pasien) == 2) { $twoDimArray_nohp_pasien[] = $row_nohp_pasien; $row_nohp_pasien = array(); }}
 
-
+        foreach ($int_arr_nama_pasien as $element)
+        { 
+            $row_nama_pasien[] = $element;
+            if (count($row_nama_pasien) == 2) 
+            { 
+                $twoDimArray_nama_pasien[] = $row_nama_pasien; 
+                $row_nama_pasien = array(); 
+            }
+        }
         
-        $modulo_nama_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_nama_pasien, array_keys($twoDimArray_nama_pasien));
+        foreach ($int_arr_kategori_pasien as $element) 
+        { 
+            $row_kategori_pasien[] = $element;
+            if (count($row_kategori_pasien) == 2) 
+            { 
+                $twoDimArray_kategori_pasien[] = $row_kategori_pasien; 
+                $row_kategori_pasien = array(); 
+            }
+        }
+
+        foreach ($int_arr_umur_pasien as $element) 
+        { 
+            $row_umur_pasien[] = $element;
+            if (count($row_umur_pasien) == 2) 
+            { 
+                $twoDimArray_umur_pasien[] = $row_umur_pasien; 
+                $row_umur_pasien = array(); 
+            }
+        }
+
+        foreach ($int_arr_jkel_pasien as $element) 
+        { 
+            $row_jkel_pasien[] = $element;
+            if (count($row_jkel_pasien) == 2) 
+            { 
+                $twoDimArray_jkel_pasien[] = $row_jkel_pasien; 
+                $row_jkel_pasien = array(); 
+            }
+        }
+
+        foreach ($int_arr_nohp_pasien as $element) 
+        { 
+            $row_nohp_pasien[] = $element;
+            if (count($row_nohp_pasien) == 2) 
+            { 
+                $twoDimArray_nohp_pasien[] = $row_nohp_pasien; 
+                $row_nohp_pasien = array(); 
+            }
+        }
         
+        $modulo_nama_pasien = array_map(function ($value, $index) 
+        {
+            return $this->DekripsiElgamal($value, $index); 
+        }, $twoDimArray_nama_pasien, array_keys($twoDimArray_nama_pasien));
+        
+        $modulo_kategori_pasien = array_map(function ($value, $index) 
+        {
+            return $this->DekripsiElgamal($value, $index); 
+        }, $twoDimArray_kategori_pasien, array_keys($twoDimArray_kategori_pasien));
 
-        $modulo_kategori_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_kategori_pasien, array_keys($twoDimArray_kategori_pasien));
+        $modulo_umur_pasien = array_map(function ($value, $index) 
+        {
+            return $this->DekripsiElgamal($value, $index); 
+        }, $twoDimArray_umur_pasien, array_keys($twoDimArray_umur_pasien));
 
-        $modulo_umur_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_umur_pasien, array_keys($twoDimArray_umur_pasien));
+        $modulo_jkel_pasien = array_map(function ($value, $index) 
+        {
+            return $this->DekripsiElgamal($value, $index); 
+        }, $twoDimArray_jkel_pasien, array_keys($twoDimArray_jkel_pasien));
 
-        $modulo_jkel_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_jkel_pasien, array_keys($twoDimArray_jkel_pasien));
-
-        $modulo_nohp_pasien = array_map(function ($value, $index) {return $this->DekripsiElgamal($value, $index); }, $twoDimArray_nohp_pasien, array_keys($twoDimArray_nohp_pasien));
+        $modulo_nohp_pasien = array_map(function ($value, $index) 
+        {
+            return $this->DekripsiElgamal($value, $index); 
+        }, $twoDimArray_nohp_pasien, array_keys($twoDimArray_nohp_pasien));
         
         Log::info(json_encode($modulo_nama_pasien));
         
@@ -508,7 +632,6 @@ class PasienController extends Controller
         $ascii_umur_pasien = array_map('chr', $modulo_umur_pasien);
         $ascii_jkel_pasien = array_map('chr', $modulo_jkel_pasien);
         $ascii_nohp_pasien = array_map('chr', $modulo_nohp_pasien);
-
 
         //descipt
         $desc_nama_pasien = implode($ascii_nama_pasien);
@@ -528,5 +651,234 @@ class PasienController extends Controller
             'nohp_pasien' => $desc_nohp_pasien,
         ], [ 'type_menu' => '']);
 
+    }
+    public function ubah($id)
+    {
+        $pasien = Pasien::where('id_pasien', $id)->get();  
+        $id_pasien = $pasien->pluck('id_pasien');
+        $nama_pasien = $pasien->pluck('nama_pasien');
+        $kode_pasien = $pasien->pluck('kode_pasien');
+        $kategori_pasien = $pasien->pluck('kategori_pasien');
+        $umur_pasien = $pasien->pluck('umur_pasien');
+        $jkel_pasien = $pasien->pluck('jkel_pasien');
+        $nohp_pasien = $pasien->pluck('nohp_pasien');
+
+      //convert to array
+      $arr_nama_pasien = $nama_pasien->toArray();
+      $arr_kode_pasien = $kode_pasien->toArray();
+      $arr_kategori_pasien = $kategori_pasien->toArray();
+      $arr_umur_pasien = $umur_pasien->toArray();
+      $arr_jkel_pasien = $jkel_pasien->toArray();
+      $arr_nohp_pasien = $nohp_pasien->toArray();
+     
+      //convert string array to numeric array
+      $str_nama_pasien = implode(" ", $arr_nama_pasien);  
+      $str_kode_pasien = implode(" ", $arr_kode_pasien); 
+      $str_kategori_pasien = implode(" ", $arr_kategori_pasien); 
+      $str_umur_pasien = implode(" ", $arr_umur_pasien);  
+      $str_jkel_pasien = implode(" ", $arr_jkel_pasien);  
+      $str_nohp_pasien = implode(" ", $arr_nohp_pasien);  
+   
+      $int_nama_pasien = explode(" ", $str_nama_pasien);
+      $int_kategori_pasien = explode(" ", $str_kategori_pasien);
+      $int_umur_pasien = explode(" ", $str_umur_pasien);
+      $int_jkel_pasien = explode(" ", $str_jkel_pasien);
+      $int_nohp_pasien = explode(" ", $str_nohp_pasien);
+
+      //convert integer to array
+      $int_arr_nama_pasien = array_map('intval', $int_nama_pasien);
+      $int_arr_kategori_pasien = array_map('intval', $int_kategori_pasien);
+      $int_arr_umur_pasien = array_map('intval', $int_umur_pasien);
+      $int_arr_jkel_pasien = array_map('intval', $int_jkel_pasien);
+      $int_arr_nohp_pasien = array_map('intval', $int_nohp_pasien);
+
+      $twoDimArray_nama_pasien = array();
+      $twoDimArray_kategori_pasien = array();
+      $twoDimArray_umur_pasien = array();
+      $twoDimArray_jkel_pasien = array();
+      $twoDimArray_nohp_pasien = array();
+
+      $row_nama_pasien = array(); 
+      $row_kategori_pasien = array(); 
+      $row_umur_pasien = array(); 
+      $row_jkel_pasien = array(); 
+      $row_nohp_pasien = array(); 
+
+      foreach ($int_arr_nama_pasien as $element)
+      { 
+          $row_nama_pasien[] = $element;
+          if (count($row_nama_pasien) == 2) 
+          { 
+              $twoDimArray_nama_pasien[] = $row_nama_pasien; 
+              $row_nama_pasien = array(); 
+          }
+      }
+      
+      foreach ($int_arr_kategori_pasien as $element) 
+      { 
+          $row_kategori_pasien[] = $element;
+          if (count($row_kategori_pasien) == 2) 
+          { 
+              $twoDimArray_kategori_pasien[] = $row_kategori_pasien; 
+              $row_kategori_pasien = array(); 
+          }
+      }
+
+      foreach ($int_arr_umur_pasien as $element) 
+      { 
+          $row_umur_pasien[] = $element;
+          if (count($row_umur_pasien) == 2) 
+          { 
+              $twoDimArray_umur_pasien[] = $row_umur_pasien; 
+              $row_umur_pasien = array(); 
+          }
+      }
+
+      foreach ($int_arr_jkel_pasien as $element) 
+      { 
+          $row_jkel_pasien[] = $element;
+          if (count($row_jkel_pasien) == 2) 
+          { 
+              $twoDimArray_jkel_pasien[] = $row_jkel_pasien; 
+              $row_jkel_pasien = array(); 
+          }
+      }
+
+      foreach ($int_arr_nohp_pasien as $element) 
+      { 
+          $row_nohp_pasien[] = $element;
+          if (count($row_nohp_pasien) == 2) 
+          { 
+              $twoDimArray_nohp_pasien[] = $row_nohp_pasien; 
+              $row_nohp_pasien = array(); 
+          }
+      }
+      
+      $modulo_nama_pasien = array_map(function ($value, $index) 
+      {
+          return $this->DekripsiElgamal($value, $index); 
+      }, $twoDimArray_nama_pasien, array_keys($twoDimArray_nama_pasien));
+      
+      $modulo_kategori_pasien = array_map(function ($value, $index) 
+      {
+          return $this->DekripsiElgamal($value, $index); 
+      }, $twoDimArray_kategori_pasien, array_keys($twoDimArray_kategori_pasien));
+
+      $modulo_umur_pasien = array_map(function ($value, $index) 
+      {
+          return $this->DekripsiElgamal($value, $index); 
+      }, $twoDimArray_umur_pasien, array_keys($twoDimArray_umur_pasien));
+
+      $modulo_jkel_pasien = array_map(function ($value, $index) 
+      {
+          return $this->DekripsiElgamal($value, $index); 
+      }, $twoDimArray_jkel_pasien, array_keys($twoDimArray_jkel_pasien));
+
+      $modulo_nohp_pasien = array_map(function ($value, $index) 
+      {
+          return $this->DekripsiElgamal($value, $index); 
+      }, $twoDimArray_nohp_pasien, array_keys($twoDimArray_nohp_pasien));
+      
+      Log::info(json_encode($modulo_nama_pasien));
+      
+      //convert to ascii
+      $ascii_nama_pasien = array_map('chr', $modulo_nama_pasien);
+      $ascii_kategori_pasien = array_map('chr', $modulo_kategori_pasien);
+      $ascii_umur_pasien = array_map('chr', $modulo_umur_pasien);
+      $ascii_jkel_pasien = array_map('chr', $modulo_jkel_pasien);
+      $ascii_nohp_pasien = array_map('chr', $modulo_nohp_pasien);
+
+      //descipt
+      $desc_nama_pasien = implode($ascii_nama_pasien);
+      $desc_kategori_pasien = implode($ascii_kategori_pasien);
+      $desc_umur_pasien = implode($ascii_umur_pasien);
+      $desc_jkel_pasien = implode($ascii_jkel_pasien);
+      $desc_nohp_pasien = implode($ascii_nohp_pasien);
+
+
+        return view('pages.pasien.ubah', [
+            'type_menu' => '', 
+            'id_pasien' => $id_pasien,
+            'nama_pasien' => $desc_nama_pasien,
+            'kode_pasien' => $str_kode_pasien,
+            'kategori_pasien' => $desc_kategori_pasien,
+            'umur_pasien' => $desc_umur_pasien,
+            'jkel_pasien' => $desc_jkel_pasien,
+            'nohp_pasien' => $desc_nohp_pasien,
+        ]);
+    
+    }
+    public function put(Request $request)
+    {
+        $id_pasien = $request->id_pasien;
+        $nama_pasien = $request->nama_pasien;
+        $kode_pasien = $request->kode_pasien;
+        $kategori_pasien = $request->kategori_pasien;
+        $umur_pasien = $request->umur_pasien;
+        $jkel_pasien = $request->jkel_pasien;
+        $nohp_pasien = $request->nohp_pasien;
+        
+        $ascii_nama_pasien = $this->stringToAscii($nama_pasien);
+        $ascii_kategori_pasien = $this->stringToAscii($kategori_pasien);
+        $ascii_umur_pasien = $this->stringToAscii($umur_pasien);
+        $ascii_jkel_pasien = $this->stringToAscii($jkel_pasien);
+        $ascii_nohp_pasien = $this->stringToAscii($nohp_pasien);
+
+
+        $modulo_nama_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_nama_pasien, array_keys($ascii_nama_pasien));
+
+        $modulo_kategori_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_kategori_pasien, array_keys($ascii_kategori_pasien));
+        
+        $modulo_umur_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_umur_pasien, array_keys($ascii_umur_pasien));
+        
+        $modulo_jkel_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_jkel_pasien, array_keys($ascii_jkel_pasien));
+        
+        $modulo_nohp_pasien = array_map(function ($value, $index) 
+        {
+            return $this->EnkripsiElgamal($value, $index); 
+        }, $ascii_nohp_pasien, array_keys($ascii_nohp_pasien));
+
+        $enkrip_nama_pasien = array();
+        $enkrip_kategori_pasien = array();
+        $enkrip_umur_pasien = array();
+        $enkrip_jkel_pasien = array();
+        $enkrip_nohp_pasien = array();
+
+        foreach ($modulo_nama_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_nama_pasien[] = $element;}}
+        foreach ($modulo_kategori_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_kategori_pasien[] = $element;}}
+        foreach ($modulo_umur_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_umur_pasien[] = $element;}}
+        foreach ($modulo_jkel_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_jkel_pasien[] = $element;}}
+        foreach ($modulo_nohp_pasien as $subArray) {foreach ($subArray as $element) { $enkrip_nohp_pasien[] = $element;}}
+
+        $str_nama_pasien = implode(" ", $enkrip_nama_pasien);
+        $str_kategori_pasien = implode(" ", $enkrip_kategori_pasien);
+        $str_umur_pasien = implode(" ", $enkrip_umur_pasien);
+        $str_jkel_pasien = implode(" ", $enkrip_jkel_pasien);
+        $str_nohp_pasien = implode(" ", $enkrip_nohp_pasien);
+        $timestamp = Carbon::now();
+
+        Pasien::where('kode_pasien',$kode_pasien)->update([
+            'nama_pasien' => $str_nama_pasien,
+            'kode_pasien' => $kode_pasien,
+            'kategori_pasien' => $str_kategori_pasien,
+            'umur_pasien' => $str_umur_pasien,
+            'jkel_pasien' => $str_jkel_pasien,
+            'nohp_pasien' => $str_nohp_pasien,
+        ]);
+        
+       
+        return redirect('data-pasien');
     }
 }
