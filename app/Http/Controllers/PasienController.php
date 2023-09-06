@@ -37,6 +37,7 @@ class PasienController extends Controller
 
     public function EncryptRSA($plaintext){
         $ascii = $this->stringToAscii($plaintext);
+
         $modulo = array_map(function ($item) { 
             return $item**3%319; 
         }, $ascii);
@@ -46,16 +47,16 @@ class PasienController extends Controller
     }
 
     public function DecryptRSA($chipertext){
-        $e = 187;
+        $d = 187;
         $n = 319;
 
         $int = explode(" ", $chipertext);
         $int_arr = array_map('intval', $int);
 
-        $pow  = array_map(function($m) use ($e) { return $this->customPowerPow($m, $e); 
+        $pow  = array_map(function($m) use ($d) { return $this->customPowerPow($m, $d); 
         }, $int_arr);
 
-        $modulo  = array_map(function($num) use ($n) { return $this->customPowerMod($num, $n);
+        $modulo  = array_map(function($m) use ($n) { return $this->customPowerMod($m, $n);
         }, $pow);
 
         $ascii = array_map('chr', $modulo);
@@ -233,7 +234,7 @@ class PasienController extends Controller
 
         return redirect('data-pasien');
     }
-    public function EnkripsiElgamal($a){
+    public function RumusEnkripsiElgamal($a){
         $p=257;
         $g=2;
         $x=255;
@@ -254,7 +255,8 @@ class PasienController extends Controller
         return [$gamma, $delta];
     }
 
-    public function DekripsiElgamal($a){
+    public function RumusDekripsiElgamal($a){
+
         $x=$a[0]*$a[1];
         $m= bcmod($x,"257");
         return $m;
@@ -268,12 +270,11 @@ class PasienController extends Controller
 
         foreach ($int_arr as $element)  {$row[] = $element;
             if (count($row) == 2){ 
-                  $twoDimArray[] = $row; 
+                $twoDimArray[] = $row; 
                 $row = array(); }}
 
-        $modulo = array_map(function ($value) { return $this->DekripsiElgamal($value); 
+        $modulo = array_map(function ($value) { return $this->RumusDekripsiElgamal($value); 
         }, $twoDimArray, array_keys($twoDimArray));
-
         $ascii = array_map('chr', $modulo);
 
         $plaintext = implode($ascii);
@@ -285,7 +286,7 @@ class PasienController extends Controller
 
         $ascii = $this->stringToAscii($plaintext);
 
-        $modulo = array_map(function ($value, $index)  { return $this->EnkripsiElgamal($value, $index); 
+        $modulo = array_map(function ($value)  { return $this->RumusEnkripsiElgamal($value); 
         }, $ascii, array_keys($ascii));
 
         $enkrip = array();
