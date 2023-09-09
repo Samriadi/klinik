@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('obat_pasien');
             $table->string('perawat');
             $table->string('dokter');
+            $table->integer('role');
             $table->timestamps();
         });
     }
