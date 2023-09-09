@@ -61,6 +61,8 @@ Route::post('/store-riwayat',  [RiwayatController::class, 'store'])->name('riway
 Route::get('/desc-riwayat/{id}',  [RiwayatController::class, 'desc'])->name('riwayat.desc');
 Route::get('/edit-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
 Route::get('/hapus-riwayat/{id}',  [RiwayatController::class, 'hapus'])->name('riwayat.hapus');
+Route::get('/add-riwayat', [RiwayatController::class, 'add'])->name('riwayat.add');
+Route::post('/save-riwayat',  [RiwayatController::class, 'save'])->name('Riwayat.save');
 
 //dokter
 Route::get('/data-dokter', [DokterController::class, 'index'])->name('dokter.index');

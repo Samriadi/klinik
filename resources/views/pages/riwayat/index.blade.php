@@ -32,7 +32,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <a href="tambah-riwayat" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i></a>
+                            <div class="btn-group mb-3"
+                            role="group"
+                            aria-label="Basic example">
+                            <a href="tambah-riwayat" role="button" class="btn btn-icon btn-primary"><i class="far fa-add"></i>RSA</a>
+                            <a href="add-riwayat" role="button" class="btn btn-icon btn-danger"><i class="far fa-add"></i>ELGAMAL</a>
+                            </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">

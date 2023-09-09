@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Riwayat;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class RiwayatController extends Controller
 {
@@ -282,4 +284,134 @@ class RiwayatController extends Controller
             
         return redirect('data-riwayat');
     }
+
+    public function EncryptRSA($plaintext){
+        $ascii = $this->stringToAscii($plaintext);
+
+        $modulo = array_map(function ($item) { 
+            return $item**3%319; 
+        }, $ascii);
+
+        $chipertext = implode(" ", $modulo);
+        return $chipertext;
+    }
+
+    public function DecryptRSA($chipertext){
+        $d = 187;
+        $n = 319;
+
+        $int = explode(" ", $chipertext);
+        $int_arr = array_map('intval', $int);
+
+        $pow  = array_map(function($m) use ($d) { return $this->customPowerPow($m, $d); 
+        }, $int_arr);
+
+        $modulo  = array_map(function($m) use ($n) { return $this->customPowerMod($m, $n);
+        }, $pow);
+
+        $ascii = array_map('chr', $modulo);
+        $plaintext = implode($ascii);
+
+        return $plaintext;
+    }
+
+    public function RumusEnkripsiElgamal($a){
+        $p=257;
+        $g=2;
+        $x=255;
+        $y=129;
+
+        $m=$a;
+        $k=rand(1, 7);
+
+        //menhitung nilai gamma
+        $gk= bcpow($g, $k);
+        $gamma = bcmod($gk, $p);
+
+        //menghitung nilai delta
+        $yk = bcpow($y, $k);
+        $ykm = strval($yk*$m);
+        $delta = bcmod($ykm, $p);
+        Log::info(" New Random K : ".$k);
+        return [$gamma, $delta];
+    }
+
+    public function RumusDekripsiElgamal($a){
+
+        $x=$a[0]*$a[1];
+        $m= bcmod($x,"257");
+        return $m;
+    }
+
+    public function DecryptElgamal($chipertext){
+        $int = explode(" ", $chipertext);
+        $int_arr = array_map('intval', $int);
+        $twoDimArray = array();
+        $row = array(); 
+
+        foreach ($int_arr as $element)  {$row[] = $element;
+            if (count($row) == 2){ 
+                $twoDimArray[] = $row; 
+                $row = array(); }}
+
+        $modulo = array_map(function ($value) { return $this->RumusDekripsiElgamal($value); 
+        }, $twoDimArray, array_keys($twoDimArray));
+        $ascii = array_map('chr', $modulo);
+
+        $plaintext = implode($ascii);
+
+        return $plaintext;
+    }
+
+    public function EnryptElgamal($plaintext){
+
+        $ascii = $this->stringToAscii($plaintext);
+
+        $modulo = array_map(function ($value)  { return $this->RumusEnkripsiElgamal($value); 
+        }, $ascii, array_keys($ascii));
+
+        $enkrip = array();
+        foreach ($modulo as $subArray) {foreach ($subArray as $element) { $enkrip[] = $element;}}
+
+        $chipertext = implode(" ", $enkrip);
+
+        return $chipertext;
+    }
+
+    public function add(){
+        return view('pages.riwayat.add', [ 'type_menu' => '']);
+    }
+
+    public function save(Request $request)
+    {
+        $identitas_pasien = $request->input('identitas_pasien');
+        $tanggal_berobat = $request->input('tanggal_berobat');
+        $gejala_pasien = $request->input('gejala_pasien');
+        $obat_pasien = $request->input('obat_pasien');
+        $perawat = $request->input('perawat');
+        $dokter = $request->input('dokter');
+        
+        $chipertext_identitas_pasien = $this->EnryptElgamal($identitas_pasien);
+        $chipertext_gejala_pasien = $this->EnryptElgamal($gejala_pasien);
+        $chipertext_obat_pasien = $this->EnryptElgamal($obat_pasien);
+        $timestamp = Carbon::now();
+        // insert data ke table 
+        Riwayat::insert([
+            'identitas_pasien' => $chipertext_identitas_pasien,
+            'tanggal_berobat' => $tanggal_berobat,
+            'gejala_pasien' => $chipertext_gejala_pasien,
+            'obat_pasien' => $chipertext_obat_pasien,
+            'perawat' => $perawat,
+            'dokter' => $dokter,
+            'role' => 1,
+            'created_at' => $timestamp,
+        ]);
+        // alihkan halaman ke halaman 
+
+        // Log::info(json_encode($modulo_nama_pasien));
+
+        return redirect('data-riwayat');
+    }
+
+
 }

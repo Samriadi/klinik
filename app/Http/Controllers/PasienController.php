@@ -234,6 +234,7 @@ class PasienController extends Controller
 
         return redirect('data-pasien');
     }
+    
     public function RumusEnkripsiElgamal($a){
         $p=257;
         $g=2;
