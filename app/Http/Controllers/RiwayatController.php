@@ -406,10 +406,7 @@ class RiwayatController extends Controller
             'role' => 1,
             'created_at' => $timestamp,
         ]);
-        // alihkan halaman ke halaman 
-
-        // Log::info(json_encode($modulo_nama_pasien));
-
+      
         return redirect('data-riwayat');
     }
 
