@@ -36,19 +36,23 @@ class PasienController extends Controller
     }
 
     public function EncryptRSA($plaintext){
+        $e = 37;
+        $n = 77;
+
         $ascii = $this->stringToAscii($plaintext);
 
-        $modulo = array_map(function ($item) { 
-            return $item**3%319; 
+        $pow  = array_map(function($m) use ($e) { return $this->customPowerPow($m, $e); 
         }, $ascii);
 
+        $modulo  = array_map(function($m) use ($n) { return $this->customPowerMod($m, $n);
+        }, $pow);
+        
         $chipertext = implode(" ", $modulo);
         return $chipertext;
     }
-
     public function DecryptRSA($chipertext){
-        $d = 187;
-        $n = 319;
+        $d = 13;
+        $n = 77;
 
         $int = explode(" ", $chipertext);
         $int_arr = array_map('intval', $int);
