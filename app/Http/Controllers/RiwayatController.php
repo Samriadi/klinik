@@ -57,6 +57,7 @@ class RiwayatController extends Controller
             'obat_pasien' => $str_obat_pasien,
             'perawat' => $perawat,
             'dokter' => $dokter,
+            'role' => 0,
         ]);
         // alihkan halaman ke halaman 
         return redirect('data-riwayat');
@@ -425,8 +426,8 @@ class RiwayatController extends Controller
         $plaintext_identitas_pasien = $this->DecryptElgamal($identitas_pasien);
         $plaintext_gejala_pasien = $this->DecryptElgamal($gejala_pasien);
         $plaintext_obat_pasien = $this->DecryptElgamal($obat_pasien);
-
-        return view('pages.pasien.ubah', [
+        
+        return view('pages.riwayat.ubah', [
             'type_menu' => '', 
             'id_riwayat' => $id_riwayat,
             'identitas_pasien' => $plaintext_identitas_pasien,

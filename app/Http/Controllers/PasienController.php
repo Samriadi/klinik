@@ -36,8 +36,8 @@ class PasienController extends Controller
     }
 
     public function EncryptRSA($plaintext){
-        $e = 37;
-        $n = 77;
+        $e = 3;
+        $n = 319;
 
         $ascii = $this->stringToAscii($plaintext);
 
@@ -51,8 +51,8 @@ class PasienController extends Controller
         return $chipertext;
     }
     public function DecryptRSA($chipertext){
-        $d = 13;
-        $n = 77;
+        $d = 187;
+        $n = 319;
 
         $int = explode(" ", $chipertext);
         $int_arr = array_map('intval', $int);
@@ -240,13 +240,13 @@ class PasienController extends Controller
     }
     
     public function RumusEnkripsiElgamal($a){
-        $p=257;
-        $g=2;
-        $x=255;
-        $y=129;
+        $p=277;
+        $g=7;
+        $x=157;
+        $y=206;
 
         $m=$a;
-        $k=rand(1, 7);
+        $k=5;
 
         //menhitung nilai gamma
         $gk= bcpow($g, $k);
@@ -290,7 +290,6 @@ class PasienController extends Controller
     public function EnryptElgamal($plaintext){
 
         $ascii = $this->stringToAscii($plaintext);
-
         $modulo = array_map(function ($value)  { return $this->RumusEnkripsiElgamal($value); 
         }, $ascii, array_keys($ascii));
 
@@ -298,6 +297,7 @@ class PasienController extends Controller
         foreach ($modulo as $subArray) {foreach ($subArray as $element) { $enkrip[] = $element;}}
 
         $chipertext = implode(" ", $enkrip);
+        // dd($ascii, $modulo, $enkrip, $chipertext);
 
         return $chipertext;
     }

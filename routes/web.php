@@ -18,13 +18,14 @@ use App\Models\Riwayat;
 |
 */
 
-Route::redirect('/', '/dashboard');
+Route::redirect('/', '/login');
 
-// Dashboard
+// login
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+Route::get('/login', function () {
+    return view('auth.login');
 });
+Route::post('/login',  [LoginController::class, 'login']);
 
 // credits
 Route::get('/credits', function () {
@@ -61,7 +62,7 @@ Route::post('/store-riwayat',  [RiwayatController::class, 'store'])->name('riway
 Route::get('/desc-riwayat/{id}',  [RiwayatController::class, 'desc'])->name('riwayat.desc');
 Route::get('/deks-riwayat/{id}',  [RiwayatController::class, 'deks'])->name('riwayat.deks');
 Route::get('/edit-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
-Route::get('/ubah-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
+Route::get('/ubah-riwayat/{id}',  [RiwayatController::class, 'ubah'])->name('riwayat.ubah');
 Route::get('/hapus-riwayat/{id}',  [RiwayatController::class, 'hapus'])->name('riwayat.hapus');
 Route::get('/add-riwayat', [RiwayatController::class, 'add'])->name('riwayat.add');
 Route::post('/save-riwayat',  [RiwayatController::class, 'save'])->name('Riwayat.save');
@@ -75,6 +76,13 @@ Route::post('/store-dokter',  [DokterController::class, 'store'])->name('dokter.
 Route::get('/edit-dokter/{id}',  [DokterController::class, 'edit'])->name('dokter.edit');
 Route::post('/update-dokter',  [DokterController::class, 'update'])->name('dokter.update');
 Route::get('/hapus-dokter/{id}',  [DokterController::class, 'hapus'])->name('dokter.hapus');
+
+
+
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 

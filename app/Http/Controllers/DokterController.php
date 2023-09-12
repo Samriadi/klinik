@@ -42,39 +42,49 @@ class DokterController extends Controller
         return view('pages.dokter.tambah', [ 'type_menu' => '']);
     }
 
-    // public function edit($id)
-    // {
-    //     $perawat = Perawat::where('id_perawat', $id)->get();  
-    //     return view('pages.perawat.edit', [ 'type_menu' => ''], ['perawat' => $perawat]);
-    // }
-    // public function update(Request $request)
-    // {
-    //     // dd($request);
-    //     // dd($request->id_perawat);
-    //     $id_perawat = $request->id_perawat;
-    //     $nama_perawat = $request->nama_perawat;
-    //     $nip_perawat = $request->nip_perawat;
-    //     $nohp_perawat = $request->nohp_perawat;
+    public function edit($id)
+    {
+        $dokter = Dokter::where('id_dokter', $id)->first();
+        $id_dokter = $dokter->id_dokter;
+        $nama_dokter = $dokter->nama_dokter;
+        $nip_dokter = $dokter->nip_dokter;
+        $nohp_dokter = $dokter->nohp_dokter;
+        $foto_dokter = $dokter->foto_dokter;
 
-    //     // dd($nama_perawat);
-    //     // $request->validate
-    //     // ([
-    //     //     'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
-    //     // ]);
-    
-    //     // if ($request->hasFile('image')) {
-    //     //     $imagePath = $request->file('image')->store('images', 'public');
-    //     // }
-
-    //     Perawat::where('id_perawat',$id_perawat)->update([
-    //         'nama_perawat' => $nama_perawat,
-    //         'nip_perawat' => $nip_perawat,
-    //         'nohp_perawat' => $nohp_perawat,
-    //     ]);
+        return view('pages.dokter.edit', [ 'type_menu' => ''], [
+            'id' => $id_dokter,
+            'nama' => $nama_dokter,
+            'nip' => $nip_dokter,
+            'nohp' => $nohp_dokter,
+            'foto' => $foto_dokter,
         
-    //     return redirect('data-perawat'); 
+        ]);
+    }
+    public function update(Request $request)
+    {
+        $id_dokter = $request->id_dokter;
+        $nama_dokter = $request->nama_dokter;
+        $nip_dokter = $request->nip_dokter;
+        $nohp_dokter = $request->nohp_dokter;
 
-    // }
+
+        // $request->validate([
+        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust validation rules as needed
+        // ]);
+
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('images', 'public');
+        // }
+        
+        Dokter::where('id_dokter',$id_dokter)->update([
+            'nama_dokter' => $nama_dokter,
+            'nip_dokter' => $nip_dokter,
+            'nohp_dokter' => $nohp_dokter,
+        ]);
+
+        return redirect('data-dokter'); 
+
+    }
     public function hapus($id)
     {
         Dokter::where('id_dokter',$id)->delete();

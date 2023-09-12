@@ -1,6 +1,6 @@
-<!-- @extends('layouts.app')
+@extends('layouts.app')
 
-@section('title', 'DataRiwayat')
+@section('title', 'DataDokter')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -23,7 +23,7 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Pages</a></div>
-                    <div class="breadcrumb-item">DataRiwayat</div>
+                    <div class="breadcrumb-item">DataDokter</div>
                 </div>
             </div>
 
@@ -33,32 +33,26 @@
                         <div class="card">
                             <div class="card-body">
                             <div class="form-group">
-                                <h4>Edit Riwayat</h4>
-                                <form action="/update-riwayat" method="post">
-                                    {{ csrf_field() }}
-		                            <input type="hidden" name="id_riwayat" id="id_riwayat"  value="{{ $id_riwayat }}"> <br/>
+                                <h4>Edit dokter</h4>
+                                <form action="/update-dokter" method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+		                            <input type="hidden" name="id_dokter" id="id_dokter"  value="{{ $id }}"> <br/>
                                     <div class="mb-3">
-                                        <label for="identitas_pasien" class="form-label">Identitas Pasien</label>
-                                        <input type="text" class="form-control" name="identitas_pasien" id="identitas_pasien" value="{{ $identitas_pasien }}">
-                                    
-                                    <div class="mb-3">
-                                        <label for="gejala_pasien" class="form-label">Gejala Pasien</label>
-                                        <input type="text" class="form-control" name="gejala_pasien" id="gejala_pasien" value="{{ $gejala_pasien }}">
+                                        <label for="nama_dokter" class="form-label">Nama dokter</label>
+                                        <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" value="{{ $nama }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="obat_pasien" class="form-label">Obat Pasien</label>
-                                        <input type="text" class="form-control" name="obat_pasien" id="obat_pasien" value="{{ $obat_pasien }}">
+                                        <label for="nip_dokter" class="form-label">Nip dokter</label>
+                                        <input type="text" class="form-control" name="nip_dokter" id="nip_dokter" value="{{ $nip }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="perawat" class="form-label">Perawat</label>
-                                        <input type="text" class="form-control" name="perawat" id="perawat" value="{{ $perawat }}">
+                                        <label for="nohp_dokter" class="form-label">Nomor Hp dokter</label>
+                                        <input type="text" class="form-control" name="nohp_dokter" id="nohp_dokter" value="{{ $nohp }}">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="dokter" class="form-label">Dokter</label>
-                                        <input type="text" class="form-control" name="dokter" id="dokter" value="{{ $dokter }}">
-                                    </div>
+                               
                                     <input type="submit" class="btn btn-primary" value="Simpan Data">
                                 </form>
+
                             </div>
                             </div>
                         </div>
@@ -89,4 +83,4 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/bootstrap-modal.js') }}"></script>
 
-@endpush -->
+@endpush

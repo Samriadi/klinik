@@ -56,14 +56,14 @@ class PerawatControlller extends Controller
         $nohp_perawat = $request->nohp_perawat;
 
         // dd($nama_perawat);
-        // $request->validate
-        // ([
-        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
-        // ]);
+        $request->validate
+        ([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
+        ]);
     
-        // if ($request->hasFile('image')) {
-        //     $imagePath = $request->file('image')->store('images', 'public');
-        // }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
 
         Perawat::where('id_perawat',$id_perawat)->update([
             'nama_perawat' => $nama_perawat,
