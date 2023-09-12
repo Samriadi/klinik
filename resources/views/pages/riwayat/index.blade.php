@@ -45,6 +45,7 @@
                                         id="table-1">
                                         <thead>
                                             <tr>
+                                                <th>Enkripsi</th>
                                                 <th>Identitas Pasien</th>
                                                 <th>Tanggal Berobat</th>
                                                 <th>Gejala</th>
@@ -57,7 +58,11 @@
                                         <tbody>
                                         @foreach ($riwayat as $item)
                                             <tr>
-                                              
+                                                @if ($item->role===0)
+                                                <td>RSA</td>
+                                                @else
+                                                <td>ElGamal</td>
+                                                @endif
                                                 <td>{{ $item->identitas_pasien }}</td>
                                                 <td>{{ $item->tanggal_berobat }}</td>
                                                 <td>{{ $item->gejala_pasien }}</td>
@@ -65,13 +70,10 @@
                                                 <td>{{ $item->perawat }}</td>
                                                 <td>{{ $item->dokter }}</td>
                                                 <td>
-                                                <!-- <a class="btn btn-warning btn-sm" href="/edit-riwayat/{{ $item->id_riwayat }}">Edit</a>
-                                                <a class="btn btn-danger btn-sm" href="/hapus-riwayat/{{ $item->id_riwayat }}">Hapus</a>
-                                                <a class="btn btn-primary btn-sm" href="/desc-riwayat/{{ $item->id_riwayat }}">Desc</a> -->
                                                 <div class="btn-group mb-3"
                                                     role="group"
                                                     aria-label="Basic example">
-                                                    
+
                                                     @if ($item->role===0)
                                                     <a href="/edit-riwayat/{{ $item->id_riwayat }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
                                                     @else
@@ -79,7 +81,13 @@
                                                     @endif
 
                                                     <a href="/hapus-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
+
+                                                    @if ($item->role===0)
                                                     <a href="/desc-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
+                                                    @else
+                                                    <a href="/deks-riwayat/{{ $item->id_riwayat }}" role="button" class="btn btn-icon btn-primary"><i class="fas fa-info-circle"></i></a>
+                                                    @endif
+                                                    
                                                 </div>
                                             </td>
                                             </tr>

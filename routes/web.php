@@ -59,6 +59,7 @@ Route::get('/data-riwayat', [RiwayatController::class, 'index'])->name('riwayat.
 Route::get('/tambah-riwayat', [RiwayatController::class, 'tambah'])->name('riwayat.tambah');
 Route::post('/store-riwayat',  [RiwayatController::class, 'store'])->name('riwayat.store');
 Route::get('/desc-riwayat/{id}',  [RiwayatController::class, 'desc'])->name('riwayat.desc');
+Route::get('/deks-riwayat/{id}',  [RiwayatController::class, 'deks'])->name('riwayat.deks');
 Route::get('/edit-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
 Route::get('/ubah-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
 Route::get('/hapus-riwayat/{id}',  [RiwayatController::class, 'hapus'])->name('riwayat.hapus');

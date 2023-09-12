@@ -460,6 +460,27 @@ class RiwayatController extends Controller
         return redirect('data-riwayat');
     }
 
+    public function deks($id)
+    {
+        //get data from database
+        $record = Riwayat::where('id_riwayat', $id)->first();
+        $identitas_pasien = $record->identitas_pasien;
+        $gejala_pasien = $record->gejala_pasien;
+        $obat_pasien = $record->obat_pasien;
+     
+        //descipt
+        $desc_identitas_pasien = $this->DecryptElgamal($identitas_pasien);
+        $desc_gejala_pasien = $this->DecryptElgamal($gejala_pasien);
+        $desc_obat_pasien = $this->DecryptElgamal($obat_pasien);
+
+        return view('pages.riwayat.desc', [
+            'identitas_pasien' => $desc_identitas_pasien,
+            'gejala_pasien' => $desc_gejala_pasien,
+            'obat_pasien' => $desc_obat_pasien,
+         
+        ], [ 'type_menu' => '']);
+
+    }
     
 
 }
