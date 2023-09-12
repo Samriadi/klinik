@@ -410,5 +410,56 @@ class RiwayatController extends Controller
         return redirect('data-riwayat');
     }
 
+    public function ubah($id)
+    {
+         //get data from database
+         $record = Riwayat::where('id_riwayat', $id)->first();
+         $id_riwayat = $record->id_riwayat;
+         $identitas_pasien = $record->identitas_pasien;
+         $gejala_pasien = $record->gejala_pasien;
+         $obat_pasien = $record->obat_pasien;
+         $perawat = $record->perawat;
+         $dokter = $record->dokter;
+
+        //descipt
+        $plaintext_identitas_pasien = $this->DecryptElgamal($identitas_pasien);
+        $plaintext_gejala_pasien = $this->DecryptElgamal($gejala_pasien);
+        $plaintext_obat_pasien = $this->DecryptElgamal($obat_pasien);
+
+        return view('pages.pasien.ubah', [
+            'type_menu' => '', 
+            'id_riwayat' => $id_riwayat,
+            'identitas_pasien' => $plaintext_identitas_pasien,
+            'gejala_pasien' => $plaintext_gejala_pasien,
+            'obat_pasien' => $plaintext_obat_pasien,
+            'perawat' => $perawat,
+            'dokter' => $dokter,
+        ]);
+    }
+    public function put(Request $request)
+    {
+        $id_riwayat = $request->id_riwayat;
+        $identitas_pasien = $request->identitas_pasien;
+        $gejala_pasien = $request->gejala_pasien;
+        $obat_pasien = $request->obat_pasien;
+        $perawat = $request->perawat;
+        $dokter = $request->dokter;
+        
+        $chipertext_identitas_pasien = $this->EnryptElgamal($identitas_pasien);
+        $chipertext_gejala_pasien= $this->EnryptElgamal($gejala_pasien);
+        $chipertext_obat_pasien = $this->EnryptElgamal($obat_pasien);
+
+        Riwayat::where('id_riwayat',$id_riwayat)->update([
+            'identitas_pasien' => $chipertext_identitas_pasien,
+            'gejala_pasien' => $chipertext_gejala_pasien,
+            'obat_pasien' => $chipertext_obat_pasien,
+            'perawat' => $perawat,
+            'dokter' => $dokter,
+        ]);
+       
+        return redirect('data-riwayat');
+    }
+
+    
 
 }

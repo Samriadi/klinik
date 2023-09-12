@@ -71,7 +71,13 @@
                                                 <div class="btn-group mb-3"
                                                     role="group"
                                                     aria-label="Basic example">
-                                                    <a href="/edit-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    
+                                                    @if ($item->role===0)
+                                                    <a href="/edit-riwayat/{{ $item->id_riwayat }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    @else
+                                                    <a href="/ubah-riwayat/{{ $item->id_riwayat }}" role="button" class="btn btn-icon btn-secondary"><i class="fas fa-pencil-alt"></i></a> 
+                                                    @endif
+
                                                     <a href="/hapus-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></a>
                                                     <a href="/desc-riwayat/{{ $item->id_riwayat}}" role="button" class="btn btn-icon btn-info"><i class="fas fa-info-circle"></i></a>
                                                 </div>
