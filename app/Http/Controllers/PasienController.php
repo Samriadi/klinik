@@ -221,6 +221,7 @@ class PasienController extends Controller
         $chipertext_nohp_pasien = $this->EnryptElgamal($nohp_pasien);
         $timestamp = Carbon::now();
 
+        dd($chipertext_nama_pasien);
         // insert data ke table 
         Pasien::insert([
             'nama_pasien' => $chipertext_nama_pasien,
@@ -239,14 +240,15 @@ class PasienController extends Controller
         return redirect('data-pasien');
     }
     
+
     public function RumusEnkripsiElgamal($a){
-        $p=277;
-        $g=7;
-        $x=157;
-        $y=206;
+        $p=257;
+        $g=2;
+        $x=255;
+        $y=129;
 
         $m=$a;
-        $k=5;
+        $k=rand (1, 7);
 
         //menhitung nilai gamma
         $gk= bcpow($g, $k);
@@ -301,7 +303,6 @@ class PasienController extends Controller
 
         return $chipertext;
     }
-
     public function deks($id)
     {
         //get data from database
