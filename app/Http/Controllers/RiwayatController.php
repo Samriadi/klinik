@@ -22,32 +22,23 @@ class RiwayatController extends Controller
     public function store(Request $request)
     {
         $identitas_pasien = $request->input('identitas_pasien');
-        $tanggal_berobat = $request->input('tanggal_berobat');
+        $tanggal_berobat =  now();
         $gejala_pasien = $request->input('gejala_pasien');
         $obat_pasien = $request->input('obat_pasien');
         $perawat = $request->input('perawat');
         $dokter = $request->input('dokter');
 
         $ascii_identitas_pasien = $this->stringToAscii($identitas_pasien);
-        $ascii_tanggal_berobat = $this->stringToAscii($tanggal_berobat);
         $ascii_gejala_pasien = $this->stringToAscii($gejala_pasien);
         $ascii_obat_pasien = $this->stringToAscii($obat_pasien);
-        $ascii_perawat = $this->stringToAscii($perawat);
-        $ascii_dokter = $this->stringToAscii($dokter);
 
         $modulo_identitas_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_identitas_pasien);
-        $modulo_tanggal_berobat = array_map(function ($item) { return $item**7%403; }, $ascii_tanggal_berobat);
         $modulo_gejala_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_gejala_pasien);
         $modulo_obat_pasien = array_map(function ($item) { return $item**7%403; }, $ascii_obat_pasien);
-        $modulo_perawat = array_map(function ($item) { return $item**7%403; }, $ascii_perawat);
-        $modulo_dokter = array_map(function ($item) { return $item**7%403; }, $ascii_dokter);
         
         $str_identitas_pasien = implode(" ", $modulo_identitas_pasien);
-        $str_tanggal_berobat = implode(" ", $modulo_tanggal_berobat);
         $str_gejala_pasien = implode(" ", $modulo_gejala_pasien);
         $str_obat_pasien = implode(" ", $modulo_obat_pasien);
-        $str_perawat = implode(" ", $modulo_perawat);
-        $str_dokter = implode(" ", $modulo_dokter);
 
         // insert data ke table 
          Riwayat::insert([
@@ -60,6 +51,32 @@ class RiwayatController extends Controller
             'role' => 0,
         ]);
         // alihkan halaman ke halaman 
+        return redirect('data-riwayat');
+    }
+    public function save(Request $request)
+    {
+        $identitas_pasien = $request->input('identitas_pasien');
+        $tanggal_berobat = now();
+        $gejala_pasien = $request->input('gejala_pasien');
+        $obat_pasien = $request->input('obat_pasien');
+        $perawat = $request->input('perawat');
+        $dokter = $request->input('dokter');
+        
+        $chipertext_identitas_pasien = $this->EnryptElgamal($identitas_pasien);
+        $chipertext_gejala_pasien = $this->EnryptElgamal($gejala_pasien);
+        $chipertext_obat_pasien = $this->EnryptElgamal($obat_pasien);
+
+        // insert data ke table 
+        Riwayat::insert([
+            'identitas_pasien' => $chipertext_identitas_pasien,
+            'tanggal_berobat' => $tanggal_berobat,
+            'gejala_pasien' => $chipertext_gejala_pasien,
+            'obat_pasien' => $chipertext_obat_pasien,
+            'perawat' => $perawat,
+            'dokter' => $dokter,
+            'role' => 1,
+        ]);
+      
         return redirect('data-riwayat');
     }
 
@@ -383,33 +400,7 @@ class RiwayatController extends Controller
         return view('pages.riwayat.add', [ 'type_menu' => '']);
     }
 
-    public function save(Request $request)
-    {
-        $identitas_pasien = $request->input('identitas_pasien');
-        $tanggal_berobat = $request->input('tanggal_berobat');
-        $gejala_pasien = $request->input('gejala_pasien');
-        $obat_pasien = $request->input('obat_pasien');
-        $perawat = $request->input('perawat');
-        $dokter = $request->input('dokter');
-        
-        $chipertext_identitas_pasien = $this->EnryptElgamal($identitas_pasien);
-        $chipertext_gejala_pasien = $this->EnryptElgamal($gejala_pasien);
-        $chipertext_obat_pasien = $this->EnryptElgamal($obat_pasien);
-        $timestamp = Carbon::now();
-        // insert data ke table 
-        Riwayat::insert([
-            'identitas_pasien' => $chipertext_identitas_pasien,
-            'tanggal_berobat' => $tanggal_berobat,
-            'gejala_pasien' => $chipertext_gejala_pasien,
-            'obat_pasien' => $chipertext_obat_pasien,
-            'perawat' => $perawat,
-            'dokter' => $dokter,
-            'role' => 1,
-            'created_at' => $timestamp,
-        ]);
-      
-        return redirect('data-riwayat');
-    }
+   
 
     public function ubah($id)
     {

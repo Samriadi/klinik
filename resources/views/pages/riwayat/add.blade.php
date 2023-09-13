@@ -34,16 +34,13 @@
                             <div class="card-body">
                             <div class="form-group">
                                 <h4>Tambah Riwayat</h4>
-                                <form action="/store-riwayat" method="post">
+                                <form action="/save-riwayat" method="post">
                                     {{ csrf_field() }}
                                     <div class="mb-3">
                                         <label for="identitas_pasien" class="form-label">Identitas Pasien</label>
                                         <input type="text" class="form-control" name="identitas_pasien" id="identitas_pasien">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="tanggal_berobat" class="form-label">Tanggal Berobat</label>
-                                        <input type="date" class="form-control" name="tanggal_berobat" id="tanggal_berobat">
-                                    </div>
+                                  
                                     <div class="mb-3">
                                         <label for="gejala_pasien" class="form-label">Gejala Pasien</label>
                                         <input type="text" class="form-control" name="gejala_pasien" id="gejala_pasien">

@@ -27,7 +27,7 @@
                                 <h4>Total Dokter</h4>
                             </div>
                             <div class="card-body">
-                                10
+                            {{$dokterCount}}
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,8 @@
                                 <h4>Perawat</h4>
                             </div>
                             <div class="card-body">
-                                42
+                            {{$perawatCount}}
+                                
                             </div>
                         </div>
                     </div>
@@ -57,7 +58,8 @@
                                 <h4>Pasien</h4>
                             </div>
                             <div class="card-body">
-                                50
+                            {{$pasienCount}}
+
                             </div>
                         </div>
                     </div>
@@ -72,7 +74,7 @@
                                 <h4>Riwayat Pasien</h4>
                             </div>
                             <div class="card-body">
-                                47
+                            {{$riwayatCount}}
                             </div>
                         </div>
                     </div>

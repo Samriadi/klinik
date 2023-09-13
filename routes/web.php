@@ -7,7 +7,9 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\LoginController;
 use App\Models\Riwayat;
-
+use App\Models\Pasien;
+use App\Models\Perawat;
+use App\Models\Dokter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +28,16 @@ Route::post('/actionlogout', [loginController::class, 'actionlogout'])->name('lo
 // Dashboard
 
 Route::get('/dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => '']);
+    $riwayat = Riwayat::count();
+    $dokter = Dokter::count();
+    $pasien = Pasien::count();
+    $perawat = Perawat::count();
+
+    return view('pages.dashboard-general-dashboard', ['type_menu' => '', 'riwayatCount' => $riwayat,
+    'dokterCount' => $dokter,
+    'pasienCount' => $pasien,
+    'perawatCount' => $perawat,
+]);
 });
 
 //pasien
@@ -62,7 +73,7 @@ Route::get('/edit-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riw
 Route::get('/ubah-riwayat/{id}',  [RiwayatController::class, 'edit'])->name('riwayat.edit');
 Route::get('/hapus-riwayat/{id}',  [RiwayatController::class, 'hapus'])->name('riwayat.hapus');
 Route::get('/add-riwayat', [RiwayatController::class, 'add'])->name('riwayat.add');
-Route::post('/save-riwayat',  [RiwayatController::class, 'save'])->name('Riwayat.save');
+Route::post('/save-riwayat',  [RiwayatController::class, 'save'])->name('riwayat.save');
 Route::post('/update-riwayat',  [RiwayatController::class, 'update'])->name('riwayat.update');
 Route::post('/put-riwayat',  [RiwayatController::class, 'put'])->name('riwayat.put');
 
